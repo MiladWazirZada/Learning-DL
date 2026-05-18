@@ -36,16 +36,3 @@ Exercises
 ```bash
 pip install -r requirements.txt
 ```
-
----
-
-## 📊 Results Highlights
-
-| Assignment              | Metric                | Achieved     |
-|-------------------------|-----------------------|--------------|
-| 07 – Normalization      | Fashion‑MNIST val acc | **86.8 %**   |
-| 08 – ResNet + Aug       | Fashion‑MNIST val acc | **76.5 %**   |
-| 09 – CIFAR‑10 Challenge | Test accuracy         | **67.3 %**   |
-| 12 – Hate Speech        | Test accuracy         | **79.6 %**   |
-| 13 – GPTrump            | Final perplexity      | **2.48**     |
-```
