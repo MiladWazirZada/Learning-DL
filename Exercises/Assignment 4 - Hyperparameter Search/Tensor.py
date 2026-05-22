@@ -1,6 +1,5 @@
 import numpy as np
 
-
 class Tensor:
 
     def __init__(self, data=None, shape=None, children: set = (), operation="", label=None,
@@ -44,34 +43,6 @@ class Tensor:
             return self.einsum("ij,jk->ik", other)
         else:
             raise RuntimeError("matmul input shapes not supported")
-
-    # def __matmul__(self, other):
-    #     other = Tensor(data=other) if not isinstance(other, Tensor) else other
-    #     #out_data = self.data @ other.data
-    #     out_data = np.dot(self.data, other.data)
-    #     assert isinstance(other, Tensor)
-    #     out = Tensor(data=out_data, children=(self, other), requires_grad=self._requires_grad)
-
-    #     def _backward():
-    #         #self.grad += out.grad @ np.atleast_2d(other.data)#.transpose()
-    #         #other.grad += self.data.transpose() @ out.grad
-
-    #         if len(self.data.shape) == 1 and len(other.data.shape) == 1:
-    #             self.grad += np.dot(np.atleast_2d(out.grad).transpose(), np.atleast_2d(other.data))
-    #             other.grad += np.dot(np.atleast_2d(self.data).transpose(), np.atleast_2d(out.grad))
-    #         elif len(self.data.shape) == 1 and len(other.data.shape) == 2:
-    #             self.grad += np.dot(np.atleast_2d(out.grad), other.data.transpose())
-    #             other.grad += np.dot(np.atleast_2d(self.data).transpose(), out.grad)
-    #         elif len(self.data.shape) == 2 and len(other.data.shape) == 1:
-    #             self.grad += np.atleast_2d(out.grad).transpose() @ np.atleast_2d(other.data)
-    #             other.grad += np.dot(self.data.transpose(), out.grad)
-    #         else:
-    #             assert len(self.data.shape) == 2 and len(other.data.shape) == 2
-    #             self.grad += np.dot(out.grad, other.data.transpose())
-    #             other.grad += np.dot(self.data.transpose(), out.grad)
-
-    #     out._backward = _backward
-    #     return out
 
     def scalar_mul(self, scalar):
         out_data = scalar * self.data
@@ -217,7 +188,6 @@ class Tensor:
         out = Tensor(data=cs, children=(self,), operation="cross-entropy")
 
         def _backward():
-            # self.grad += (target / cs + (1-target) / (1-cs)) * out.grad
             self.grad += -target / self.data * out.grad
 
         out._backward = _backward
