@@ -154,12 +154,13 @@ class Tensor:
         return out
 
     def leaky_relu(self):
-        out_data = None
-        out = Tensor(data=out_data, children=(self,), operation='Leaky ReLU')
+        alpha = 0.01
+        out_data = np.maximum(self.data, self.data * alpha)
+        out = Tensor(data=out_data, children=(self,), operation="Leaky ReLU")
 
         def _backward():
-            pass
-
+            self.grad += ((self.data > 0) * out.grad +
+                          (self.data < 0) * out.grad * alpha)
         out._backward = _backward
         return out
 
